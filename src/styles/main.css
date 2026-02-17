@@ -1,0 +1,62 @@
+* {
+  list-style: none;
+}
+
+.list {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.list-item {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.list-item > ul {
+  display: flex;
+  gap: 10px;
+}
+
+.planet-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.planet {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: silver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planet-circle {
+  position: absolute;
+  inset: -20%;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px solid #c8641a;
+}
+
+.moon {
+  margin-left: 50px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: darkblue;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.moon.active {
+  background: darkorange;
+}

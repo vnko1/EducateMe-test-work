@@ -1,30 +1,36 @@
 import { useState } from 'react';
-import reactLogo from '@/assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+
+import { moons, planets } from '@/lib';
+import { createPlanetsObj, stateCb } from '@/utils';
+import { Moon, Planet } from '@/components';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [state, setState] = useState(createPlanetsObj(planets));
+
+  const handleMoonClick = (planet: string, moonId: number) => () =>
+    setState(stateCb(planet, moonId));
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <ul className="list">
+      {planets.map((planet) => (
+        <li className="list-item" key={planet.id}>
+          <Planet {...planet} moons={state[planet.title]} />
+          <ul>
+            {moons
+              .filter((moon) => moon.planetId === planet.id)
+              .map((moon) => (
+                <li key={moon.id}>
+                  <Moon
+                    title={moon.title}
+                    onClick={handleMoonClick(planet.title, moon.id)}
+                    className={state[planet.title].includes(moon.id) ? 'active' : ''}
+                  />
+                </li>
+              ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
   );
 }
 
