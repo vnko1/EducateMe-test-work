@@ -1,14 +1,19 @@
 import { useState } from 'react';
 
 import { moons, planets } from '@/lib';
-import { createPlanetsObj, stateCb } from '@/utils';
+import { createPlanetsObj } from '@/utils';
 import { Moon, Planet } from '@/components';
 
 function App() {
   const [state, setState] = useState(createPlanetsObj(planets));
 
-  const handleMoonClick = (planet: string, moonId: number) => () =>
-    setState(stateCb(planet, moonId));
+  const handleMoonClick = (planet: string, moonId: number) => () => {
+    const planetMoons = state[planet];
+    const updMoons = planetMoons.includes(moonId)
+      ? planetMoons.filter((el) => el !== moonId)
+      : [...planetMoons, moonId];
+    setState((cState) => ({ ...cState, [planet]: updMoons }));
+  };
 
   return (
     <ul className="list">
